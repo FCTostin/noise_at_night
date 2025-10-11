@@ -9,55 +9,55 @@ const sounds = [
         id: 'thunder', 
         name: 'Гроза', 
         icon: 'https://i.imgur.com/D1dDV21.png',
-        audio: 'sounds/soft-rain-on-a-tile-roof-14515.mp3' // Измененный путь
+        audio: 'sounds/rain-and-wind-chimes-314370.mp3'
     },
     { 
         id: 'wind', 
         name: 'Ветер', 
         icon: 'https://i.imgur.com/ASvjZgs.png',
-        audio: 'sounds/wind.mp3' // Измененный путь
+        audio: 'sounds/soft-wind-316392.mp3'
     },
     { 
         id: 'forest', 
         name: 'Лес', 
         icon: 'https://i.imgur.com/YznJuVZ.png',
-        audio: 'sounds/forest.mp3' // Измененный путь
+        audio: 'sounds/forest-wind-with-crickets-and-cuckoo-355613.mp3'
     },
     { 
         id: 'Jujym', 
         name: 'Бриз', 
         icon: 'https://i.imgur.com/RDOMJwU.png',
-        audio: 'sounds/breeze.mp3' // Измененный путь (я предположил имя файла)
+        audio: 'sounds/ocean-waves-250310.mp3'
     },
     { 
         id: 'ocean', 
         name: 'Ураган', 
         icon: 'https://i.imgur.com/fQ7WkZF.png',
-        audio: 'sounds/hurricane.mp3' // Измененный путь (я предположил имя файла)
+        audio: 'sounds/rain-and-thunder-321270.mp3'
     },
     { 
         id: 'river', 
         name: 'Ночь', 
         icon: 'https://i.imgur.com/qky4HV2.png',
-        audio: 'sounds/night.mp3' // Измененный путь
+        audio: 'sounds/night-ambience-17064.mp3'
     },
     { 
         id: 'fire', 
         name: 'Костёр', 
         icon: 'https://i.imgur.com/M3Ejw7c.png',
-        audio: 'sounds/fire.mp3' // Измененный путь
+        audio: 'sounds/crackling-fire-14759.mp3'
     },
     { 
         id: 'crickets', 
         name: 'Утро', 
         icon: 'https://i.imgur.com/iKqbcZx.png',
-        audio: 'sounds/morning.mp3' // Измененный путь (я предположил имя файла)
+        audio: 'sounds/birds-19624.mp3'
     },
     { 
         id: 'night', 
-        name: 'Кафе', 
+        name: 'Город', 
         icon: 'https://i.imgur.com/0mgpmdu.png',
-        audio: 'sounds/cafe.mp3' // Измененный путь
+        audio: 'sounds/night-city-side-street-with-passing-cars-and-distant-urban-ambience-339223.mp3'
     }
 ];
 
