@@ -8,7 +8,7 @@ const sounds = [
     { 
         id: 'Гроза', 
         name: 'Гроза', 
-        icon: 'https://i.imgur.com/D1dDV21.png',
+        icon: 'https://i.imgur.com/0GROmZJ.png',
         audio: 'sounds/rain-and-wind-chimes-314370.mp3'
     },
     { 
@@ -56,7 +56,7 @@ const sounds = [
     { 
         id: 'Город', 
         name: 'Місто', 
-        icon: 'https://i.imgur.com/0mgpmdu.png',
+        icon: 'https://i.imgur.com/bC7Kxm8.png',
         audio: 'sounds/night-city-side-street-with-passing-cars-and-distant-urban-ambience-339223.mp3'
     }
 ];
