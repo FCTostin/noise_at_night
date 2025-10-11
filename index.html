@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Звуки природы</title>
+    <link rel="icon" href="https://i.imgur.com/e1JIdxx.png" type="image/png">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="timer-section">
+            <div class="timer-display" id="timerDisplay">00:00</div>
+            <div class="timer-controls">
+                <input type="number" id="minutesInput" placeholder="Минуты" min="0" value="50">
+                <button onclick="startTimer()">Старт</button>
+                <button onclick="stopTimer()">Стоп</button>
+                <button onclick="resetTimer()">Сброс</button>
+            </div>
+        </div>
+
+        <div class="sounds-grid" id="soundsGrid"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
