@@ -44,7 +44,7 @@ const sounds = [
     { 
         id: 'fire', 
         name: 'Костёр', 
-        icon: 'https://i.imgur.com/g4qf6pE.png',
+        icon: 'https://i.imgur.com/M3Ejw7c.png',
         audio: 'sounds/fire.mp3' // Измененный путь
     },
     { 
