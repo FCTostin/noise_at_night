@@ -2,61 +2,61 @@ const sounds = [
     { 
         id: 'Дождь', 
         name: 'Дощь', 
-        icon: 'https://i.imgur.com/RSg5DA0.png',
+        icon: 'icons/free-icon-rain-weather-cloud-outline-symbol-with-raindrops-lines-54456.png',
         audio: 'sounds/soft-rain-on-a-tile-roof-14515.mp3'
     },
     { 
         id: 'Гроза', 
         name: 'Гроза', 
-        icon: 'https://i.imgur.com/0GROmZJ.png',
+        icon: 'icons/free-icon-winds-lines-weather-storm-55036.png',
         audio: 'sounds/rain-and-wind-chimes-314370.mp3'
     },
     { 
         id: 'Ветер', 
         name: 'Вітер', 
-        icon: 'https://i.imgur.com/ASvjZgs.png',
+        icon: 'icons/free-icon-winds-lines-weather-symbol-55037.png',
         audio: 'sounds/soft-wind-316392.mp3'
     },
     { 
         id: 'Лес', 
         name: 'Ліс', 
-        icon: 'https://i.imgur.com/YznJuVZ.png',
+        icon: 'icons/free-icon-forest-1167380.png',
         audio: 'sounds/forest-wind-with-crickets-and-cuckoo-355613.mp3'
     },
     { 
         id: 'Бриз', 
         name: 'Бриз', 
-        icon: 'https://i.imgur.com/RDOMJwU.png',
+        icon: 'icons/free-icon-weather-interface-symbol-of-a-semicircle-on-three-lines-perspective-54741.png',
         audio: 'sounds/ocean-waves-250310.mp3'
     },
     { 
         id: 'Ураган', 
         name: 'Ураган', 
-        icon: 'https://i.imgur.com/fQ7WkZF.png',
+        icon: 'icons/free-icon-wind-socket-outlined-symbol-54561.png',
         audio: 'sounds/rain-and-thunder-321270.mp3'
     },
     { 
         id: 'Ночь', 
         name: 'Ніч', 
-        icon: 'https://i.imgur.com/qky4HV2.png',
+        icon: 'icons/free-icon-fog-at-night-weather-symbol-54523.png',
         audio: 'sounds/night-ambience-17064.mp3'
     },
     { 
         id: 'Костёр', 
         name: 'Костер', 
-        icon: 'https://i.imgur.com/M3Ejw7c.png',
+        icon: 'icons/free-icon-hot-interface-symbol-of-fire-flames-outline-54409.png',
         audio: 'sounds/crackling-fire-14759.mp3'
     },
     { 
         id: 'Утро', 
         name: 'Ранок', 
-        icon: 'https://i.imgur.com/iKqbcZx.png',
+        icon: 'icons/free-icon-sun-day-weather-symbol-54455.png',
         audio: 'sounds/birds-19624.mp3'
     },
     { 
         id: 'Город', 
         name: 'Місто', 
-        icon: 'https://i.imgur.com/bC7Kxm8.png',
+        icon: 'icons/free-icon-recycling-bin-54324.png',
         audio: 'sounds/night-city-side-street-with-passing-cars-and-distant-urban-ambience-339223.mp3'
     }
 ];
