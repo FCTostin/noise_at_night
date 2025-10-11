@@ -3,7 +3,7 @@ const sounds = [
         id: 'rain', 
         name: 'Дождь', 
         icon: 'https://i.imgur.com/RSg5DA0.png',
-        audio: 'sounds/sounds/gentle-rain-on-window-350529.mp3'
+        audio: 'sounds/gentle-rain-on-window-350529.mp3'
     },
     { 
         id: 'thunder', 
