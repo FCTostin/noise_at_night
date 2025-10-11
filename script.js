@@ -9,7 +9,7 @@ const sounds = [
         id: 'thunder', 
         name: 'Гроза', 
         icon: 'https://i.imgur.com/D1dDV21.png',
-        audio: 'sounds/thunder.mp3' // Измененный путь
+        audio: 'sounds/soft-rain-on-a-tile-roof-14515.mp3' // Измененный путь
     },
     { 
         id: 'wind', 
