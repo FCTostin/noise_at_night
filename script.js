@@ -1,61 +1,61 @@
 const sounds = [
     { 
-        id: 'rain', 
-        name: 'Дождь', 
+        id: 'Дождь', 
+        name: 'Дощь', 
         icon: 'https://i.imgur.com/RSg5DA0.png',
         audio: 'sounds/gentle-rain-on-window-350529.mp3'
     },
     { 
-        id: 'thunder', 
+        id: 'Гроза', 
         name: 'Гроза', 
         icon: 'https://i.imgur.com/D1dDV21.png',
         audio: 'sounds/rain-and-wind-chimes-314370.mp3'
     },
     { 
-        id: 'wind', 
-        name: 'Ветер', 
+        id: 'Ветер', 
+        name: 'Вітер', 
         icon: 'https://i.imgur.com/ASvjZgs.png',
         audio: 'sounds/soft-wind-316392.mp3'
     },
     { 
-        id: 'forest', 
-        name: 'Лес', 
+        id: 'Лес', 
+        name: 'Ліс', 
         icon: 'https://i.imgur.com/YznJuVZ.png',
         audio: 'sounds/forest-wind-with-crickets-and-cuckoo-355613.mp3'
     },
     { 
-        id: 'Jujym', 
+        id: 'Бриз', 
         name: 'Бриз', 
         icon: 'https://i.imgur.com/RDOMJwU.png',
         audio: 'sounds/ocean-waves-250310.mp3'
     },
     { 
-        id: 'ocean', 
+        id: 'Ураган', 
         name: 'Ураган', 
         icon: 'https://i.imgur.com/fQ7WkZF.png',
         audio: 'sounds/rain-and-thunder-321270.mp3'
     },
     { 
-        id: 'river', 
-        name: 'Ночь', 
+        id: 'Ночь', 
+        name: 'Ніч', 
         icon: 'https://i.imgur.com/qky4HV2.png',
         audio: 'sounds/night-ambience-17064.mp3'
     },
     { 
-        id: 'fire', 
-        name: 'Костёр', 
+        id: 'Костёр', 
+        name: 'Костер', 
         icon: 'https://i.imgur.com/M3Ejw7c.png',
         audio: 'sounds/crackling-fire-14759.mp3'
     },
     { 
-        id: 'crickets', 
-        name: 'Утро', 
+        id: 'Утро', 
+        name: 'Ранок', 
         icon: 'https://i.imgur.com/iKqbcZx.png',
         audio: 'sounds/birds-19624.mp3'
     },
     { 
-        id: 'night', 
-        name: 'Город', 
+        id: 'Город', 
+        name: 'Місто', 
         icon: 'https://i.imgur.com/0mgpmdu.png',
         audio: 'sounds/night-city-side-street-with-passing-cars-and-distant-urban-ambience-339223.mp3'
     }
