@@ -21,7 +21,7 @@ const sounds = [
         id: 'Лес', 
         name: 'Ліс', 
         icon: 'icons/free-icon-forest-1167380.png',
-        audio: 'sounds/forest-wind-with-crickets-and-cuckoo-355613.mp3'
+        audio: 'sounds/forest-wind-355613.mp3'
     },
     { 
         id: 'Бриз', 
@@ -57,7 +57,7 @@ const sounds = [
         id: 'Город', 
         name: 'Місто', 
         icon: 'icons/free-icon-recycling-bin-54324.png',
-        audio: 'sounds/night-city-side-street-with-passing-cars-and-distant-urban-ambience-339223.mp3'
+        audio: 'sounds/night-city-339223.mp3'
     }
 ];
 
