@@ -31,13 +31,12 @@ function init() {
             <div class="sound-name">${sound.name}</div>
             
             <div class="volume-wrapper" onclick="event.stopPropagation()">
-                <div class="volume-controls">
-                    <button class="vol-btn" onclick="adjustVolume('${sound.id}', -10)" aria-label="Тихіше">−</button>
-                    <div class="vol-slider-track" onclick="handleSliderClick(event, '${sound.id}')">
-                        <div class="vol-slider-fill" id="fill-${sound.id}" style="width: 50%"></div>
-                    </div>
-                    <button class="vol-btn" onclick="adjustVolume('${sound.id}', 10)" aria-label="Гучніше">+</button>
-                </div>
+                <input type="range" 
+                       class="volume-slider" 
+                       id="slider-${sound.id}"
+                       min="0" max="100" value="50"
+                       oninput="handleSliderInput(event, '${sound.id}')"
+                       aria-label="Гучність">
             </div>
         </div>
     `).join('');
@@ -77,18 +76,10 @@ function toggleSound(id) {
     saveState();
 }
 
-function adjustVolume(id, delta) {
-    if (!activeSoundsState[id]) return;
-    const newVol = Math.max(0, Math.min(100, activeSoundsState[id].volume + delta));
-    setVolume(id, newVol);
-}
-
-function handleSliderClick(event, id) {
-    const track = event.currentTarget;
-    const rect = track.getBoundingClientRect();
-    const x = event.clientX - rect.left;
-    const percentage = Math.max(0, Math.min(100, (x / rect.width) * 100));
-    setVolume(id, percentage);
+function handleSliderInput(event, id) {
+    event.stopPropagation();
+    const value = event.target.value;
+    setVolume(id, value);
 }
 
 function setVolume(id, volume) {
@@ -100,14 +91,13 @@ function setVolume(id, volume) {
         audioElements[id].volume = volume / 100;
     }
     
-    updateVolumeUI(id);
     saveState();
 }
 
 function updateVolumeUI(id) {
-    const fill = document.getElementById(`fill-${id}`);
-    if (fill && activeSoundsState[id]) {
-        fill.style.width = `${activeSoundsState[id].volume}%`;
+    const slider = document.getElementById(`slider-${id}`);
+    if (slider && activeSoundsState[id]) {
+        slider.value = activeSoundsState[id].volume;
     }
 }
 
