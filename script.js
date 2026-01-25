@@ -1,235 +1,244 @@
 const sounds = [
-    { 
-        id: 'Дождь', 
-        name: 'Дощь', 
-        icon: 'icons/free-icon-rain-weather-cloud-outline-symbol-with-raindrops-lines-54456.png',
-        audio: 'sounds/soft-rain-on-a-tile-roof-14515.mp3'
-    },
-    { 
-        id: 'Гроза', 
-        name: 'Гроза', 
-        icon: 'icons/free-icon-winds-lines-weather-storm-55036.png',
-        audio: 'sounds/rain-and-wind-chimes-314370.mp3'
-    },
-    { 
-        id: 'Ветер', 
-        name: 'Вітер', 
-        icon: 'icons/free-icon-winds-lines-weather-symbol-55037.png',
-        audio: 'sounds/soft-wind-316392.mp3'
-    },
-    { 
-        id: 'Лес', 
-        name: 'Ліс', 
-        icon: 'icons/free-icon-forest-1167380.png',
-        audio: 'sounds/forest-wind-355613.mp3'
-    },
-    { 
-        id: 'Бриз', 
-        name: 'Бриз', 
-        icon: 'icons/free-icon-weather-interface-symbol-of-a-semicircle-on-three-lines-perspective-54741.png',
-        audio: 'sounds/ocean-waves-250310.mp3'
-    },
-    { 
-        id: 'Ураган', 
-        name: 'Ураган', 
-        icon: 'icons/free-icon-wind-socket-outlined-symbol-54561.png',
-        audio: 'sounds/rain-and-thunder-321270.mp3'
-    },
-    { 
-        id: 'Ночь', 
-        name: 'Ніч', 
-        icon: 'icons/free-icon-fog-at-night-weather-symbol-54523.png',
-        audio: 'sounds/night-ambience-17064.mp3'
-    },
-    { 
-        id: 'Костёр', 
-        name: 'Костер', 
-        icon: 'icons/free-icon-hot-interface-symbol-of-fire-flames-outline-54409.png',
-        audio: 'sounds/crackling-fire-14759.mp3'
-    },
-    { 
-        id: 'Утро', 
-        name: 'Ранок', 
-        icon: 'icons/free-icon-sun-day-weather-symbol-54455.png',
-        audio: 'sounds/birds-19624.mp3'
-    },
-    { 
-        id: 'Город', 
-        name: 'Місто', 
-        icon: 'icons/free-icon-recycling-bin-54324.png',
-        audio: 'sounds/night-city-339223.mp3'
-    }
+    { id: 'Rain', name: 'Дощ', icon: 'icons/free-icon-rain-weather-cloud-outline-symbol-with-raindrops-lines-54456.png', audio: 'sounds/soft-rain-on-a-tile-roof-14515.mp3' },
+    { id: 'Storm', name: 'Гроза', icon: 'icons/free-icon-winds-lines-weather-storm-55036.png', audio: 'sounds/rain-and-wind-chimes-314370.mp3' },
+    { id: 'Wind', name: 'Вітер', icon: 'icons/free-icon-winds-lines-weather-symbol-55037.png', audio: 'sounds/soft-wind-316392.mp3' },
+    { id: 'Forest', name: 'Ліс', icon: 'icons/free-icon-forest-1167380.png', audio: 'sounds/forest-wind-355613.mp3' },
+    { id: 'Ocean', name: 'Океан', icon: 'icons/free-icon-weather-interface-symbol-of-a-semicircle-on-three-lines-perspective-54741.png', audio: 'sounds/ocean-waves-250310.mp3' },
+    { id: 'Hurricane', name: 'Ураган', icon: 'icons/free-icon-wind-socket-outlined-symbol-54561.png', audio: 'sounds/rain-and-thunder-321270.mp3' },
+    { id: 'Night', name: 'Ніч', icon: 'icons/free-icon-fog-at-night-weather-symbol-54523.png', audio: 'sounds/night-ambience-17064.mp3' },
+    { id: 'Fire', name: 'Костер', icon: 'icons/free-icon-hot-interface-symbol-of-fire-flames-outline-54409.png', audio: 'sounds/crackling-fire-14759.mp3' },
+    { id: 'Birds', name: 'Птахи', icon: 'icons/free-icon-sun-day-weather-symbol-54455.png', audio: 'sounds/birds-19624.mp3' },
+    { id: 'City', name: 'Місто', icon: 'icons/free-icon-recycling-bin-54324.png', audio: 'sounds/night-city-339223.mp3' }
 ];
 
 const audioElements = {};
-const activeSounds = {};
+let activeSoundsState = {};
 let timerInterval = null;
-let remainingSeconds = 0;
+let timerTargetTime = null;
 
-function saveState() {
-    const state = {
-        activeSounds: activeSounds,
-        timer: remainingSeconds
-    };
-    localStorage.setItem('natureSoundsState', JSON.stringify(state));
-}
-
-function loadState() {
-    const saved = localStorage.getItem('natureSoundsState');
-    if (saved) {
-        const state = JSON.parse(saved);
-        Object.keys(state.activeSounds).forEach(id => {
-            if (audioElements[id]) {
-                activeSounds[id] = state.activeSounds[id];
-                audioElements[id].volume = state.activeSounds[id].volume / 100;
-                audioElements[id].play();
-                
-                const card = document.getElementById(`card-${id}`);
-                const volumeControl = document.getElementById(`volume-${id}`);
-                card.classList.add('active');
-                volumeControl.classList.add('visible');
-                
-                document.getElementById(`fill-${id}`).style.width = `${state.activeSounds[id].volume}%`;
-                document.getElementById(`value-${id}`).textContent = `${state.activeSounds[id].volume}%`;
-            }
-        });
-        
-        if (state.timer > 0) {
-            remainingSeconds = state.timer;
-            updateTimerDisplay();
-        }
-    }
-}
-
-function initSounds() {
+function init() {
     const grid = document.getElementById('soundsGrid');
+    
     grid.innerHTML = sounds.map(sound => `
-        <div class="sound-card" id="card-${sound.id}" onclick="toggleSound('${sound.id}')">
-            <img src="${sound.icon}" alt="${sound.name}" class="sound-icon">
+        <div class="sound-card" 
+             id="card-${sound.id}" 
+             role="button" 
+             tabindex="0"
+             onclick="toggleSound('${sound.id}')"
+             onkeydown="handleKey(event, '${sound.id}')">
+             
+            <img src="${sound.icon}" alt="" class="sound-icon">
             <div class="sound-name">${sound.name}</div>
-            <div class="volume-control" id="volume-${sound.id}">
-                <div class="volume-item">
-                    <button class="volume-btn" onclick="event.stopPropagation(); changeVolume('${sound.id}', -5)">−</button>
-                    <div class="volume-slider" onclick="event.stopPropagation(); handleSliderClick(event, '${sound.id}')">
-                        <div class="volume-slider-fill" id="fill-${sound.id}" style="width: 50%"></div>
+            
+            <div class="volume-wrapper" onclick="event.stopPropagation()">
+                <div class="volume-controls">
+                    <button class="vol-btn" onclick="adjustVolume('${sound.id}', -10)" aria-label="Тихіше">−</button>
+                    <div class="vol-slider-track" onclick="handleSliderClick(event, '${sound.id}')">
+                        <div class="vol-slider-fill" id="fill-${sound.id}" style="width: 50%"></div>
                     </div>
-                    <button class="volume-btn" onclick="event.stopPropagation(); changeVolume('${sound.id}', 5)">+</button>
-                    <div class="volume-value" id="value-${sound.id}">50%</div>
+                    <button class="vol-btn" onclick="adjustVolume('${sound.id}', 10)" aria-label="Гучніше">+</button>
                 </div>
             </div>
         </div>
     `).join('');
 
-    sounds.forEach(sound => {
-        const audio = new Audio(sound.audio);
-        audio.loop = true;
-        audio.volume = 0.5;
-        audioElements[sound.id] = audio;
-    });
+    loadState();
 }
 
 function toggleSound(id) {
-    const card = document.getElementById(`card-${id}`);
-    const volumeControl = document.getElementById(`volume-${id}`);
-    const audio = audioElements[id];
+    if (!audioElements[id]) {
+        const soundData = sounds.find(s => s.id === id);
+        const audio = new Audio(soundData.audio);
+        audio.loop = true;
+        audioElements[id] = audio;
+    }
 
-    if (activeSounds[id]) {
+    const audio = audioElements[id];
+    const card = document.getElementById(`card-${id}`);
+
+    if (activeSoundsState[id] && activeSoundsState[id].isPlaying) {
         audio.pause();
         audio.currentTime = 0;
-        delete activeSounds[id];
+        activeSoundsState[id].isPlaying = false;
         card.classList.remove('active');
-        volumeControl.classList.remove('visible');
     } else {
-        audio.play();
-        activeSounds[id] = { volume: 50 };
+        if (!activeSoundsState[id]) {
+            activeSoundsState[id] = { volume: 50, isPlaying: true };
+        } else {
+            activeSoundsState[id].isPlaying = true;
+        }
+        
+        audio.volume = activeSoundsState[id].volume / 100;
+        audio.play().catch(e => console.error(e));
         card.classList.add('active');
-        volumeControl.classList.add('visible');
+        updateVolumeUI(id);
     }
     
     saveState();
 }
 
-function changeVolume(id, delta) {
-    if (!activeSounds[id]) return;
-    
-    const newVolume = Math.max(0, Math.min(100, activeSounds[id].volume + delta));
-    setVolume(id, newVolume);
+function adjustVolume(id, delta) {
+    if (!activeSoundsState[id]) return;
+    const newVol = Math.max(0, Math.min(100, activeSoundsState[id].volume + delta));
+    setVolume(id, newVol);
 }
 
 function handleSliderClick(event, id) {
-    const slider = event.currentTarget;
-    const rect = slider.getBoundingClientRect();
+    const track = event.currentTarget;
+    const rect = track.getBoundingClientRect();
     const x = event.clientX - rect.left;
-    const percentage = Math.round((x / rect.width) * 100);
-    
-    setVolume(id, Math.max(0, Math.min(100, percentage)));
+    const percentage = Math.max(0, Math.min(100, (x / rect.width) * 100));
+    setVolume(id, percentage);
 }
 
 function setVolume(id, volume) {
-    activeSounds[id].volume = volume;
-    audioElements[id].volume = volume / 100;
+    if (!activeSoundsState[id]) return;
     
-    document.getElementById(`fill-${id}`).style.width = `${volume}%`;
-    document.getElementById(`value-${id}`).textContent = `${volume}%`;
+    activeSoundsState[id].volume = volume;
     
+    if (audioElements[id]) {
+        audioElements[id].volume = volume / 100;
+    }
+    
+    updateVolumeUI(id);
     saveState();
+}
+
+function updateVolumeUI(id) {
+    const fill = document.getElementById(`fill-${id}`);
+    if (fill && activeSoundsState[id]) {
+        fill.style.width = `${activeSoundsState[id].volume}%`;
+    }
 }
 
 function startTimer() {
-    const minutes = parseInt(document.getElementById('minutesInput').value) || 0;
-    remainingSeconds = minutes * 60;
+    const input = document.getElementById('minutesInput');
+    const minutes = parseInt(input.value) || 0;
     
-    if (remainingSeconds <= 0) return;
+    if (minutes <= 0) return;
 
-    stopTimer();
+    const now = Date.now();
+    timerTargetTime = now + (minutes * 60 * 1000);
+
+    stopTimer(false);
     updateTimerDisplay();
-    saveState();
     
-    timerInterval = setInterval(() => {
-        remainingSeconds--;
-        updateTimerDisplay();
-        saveState();
-        
-        if (remainingSeconds <= 0) {
-            stopTimer();
-            stopAllSounds();
-        }
-    }, 1000);
+    timerInterval = setInterval(tickTimer, 1000);
+    saveState();
 }
 
-function stopTimer() {
+function tickTimer() {
+    if (!timerTargetTime) return;
+
+    const now = Date.now();
+    const remainingMs = timerTargetTime - now;
+
+    if (remainingMs <= 0) {
+        stopTimer(true);
+        stopAllSounds();
+    } else {
+        updateTimerUI(Math.ceil(remainingMs / 1000));
+    }
+}
+
+function stopTimer(clearTarget = true) {
     if (timerInterval) {
         clearInterval(timerInterval);
         timerInterval = null;
     }
+    if (clearTarget) {
+        timerTargetTime = null;
+        updateTimerUI(0);
+        saveState();
+    }
 }
 
 function resetTimer() {
-    stopTimer();
-    remainingSeconds = 0;
-    updateTimerDisplay();
-    saveState();
+    stopTimer(true);
 }
 
 function updateTimerDisplay() {
-    const minutes = Math.floor(remainingSeconds / 60);
-    const seconds = remainingSeconds % 60;
-    document.getElementById('timerDisplay').textContent = 
-        `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+    if (!timerTargetTime) return;
+    const remainingMs = timerTargetTime - Date.now();
+    updateTimerUI(Math.max(0, Math.ceil(remainingMs / 1000)));
+}
+
+function updateTimerUI(secondsLeft) {
+    const m = Math.floor(secondsLeft / 60);
+    const s = secondsLeft % 60;
+    const display = document.getElementById('timerDisplay');
+    
+    if (secondsLeft <= 0 && !timerTargetTime) {
+        display.textContent = "00:00";
+    } else {
+        display.textContent = `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+        document.title = `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')} - Звуки сну`;
+    }
 }
 
 function stopAllSounds() {
-    Object.keys(activeSounds).forEach(id => {
-        const audio = audioElements[id];
-        audio.pause();
-        audio.currentTime = 0;
-        delete activeSounds[id];
-        
-        document.getElementById(`card-${id}`).classList.remove('active');
-        document.getElementById(`volume-${id}`).classList.remove('visible');
+    Object.keys(activeSoundsState).forEach(id => {
+        if (activeSoundsState[id].isPlaying) {
+            if (audioElements[id]) {
+                audioElements[id].pause();
+                audioElements[id].currentTime = 0;
+            }
+            activeSoundsState[id].isPlaying = false;
+            
+            const card = document.getElementById(`card-${id}`);
+            if (card) card.classList.remove('active');
+        }
     });
     saveState();
+    document.title = "Звуки сну";
 }
 
-initSounds();
-loadState();
+function handleKey(event, id) {
+    if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        toggleSound(id);
+    }
+}
+
+function saveState() {
+    const data = {
+        sounds: activeSoundsState,
+        timerTarget: timerTargetTime
+    };
+    localStorage.setItem('sleepSoundsData', JSON.stringify(data));
+}
+
+function loadState() {
+    const saved = localStorage.getItem('sleepSoundsData');
+    if (saved) {
+        try {
+            const data = JSON.parse(saved);
+            
+            if (data.sounds) {
+                activeSoundsState = data.sounds;
+                Object.keys(activeSoundsState).forEach(id => {
+                    if (activeSoundsState[id].isPlaying) {
+                        activeSoundsState[id].isPlaying = false;
+                        toggleSound(id); 
+                        setVolume(id, activeSoundsState[id].volume);
+                    }
+                });
+            }
+
+            if (data.timerTarget) {
+                const now = Date.now();
+                if (data.timerTarget > now) {
+                    timerTargetTime = data.timerTarget;
+                    timerInterval = setInterval(tickTimer, 1000);
+                    tickTimer();
+                } else {
+                    timerTargetTime = null;
+                }
+            }
+        } catch (e) {
+            console.error(e);
+        }
+    }
+}
+
+document.addEventListener('DOMContentLoaded', init);
