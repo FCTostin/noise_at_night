@@ -4,8 +4,6 @@
     --card-hover: rgba(255, 255, 255, 0.2);
     --accent: #fff;
     --text-muted: #ccc;
-    --slider-bg: #444;
-    --slider-fill: #888;
 }
 
 * {
@@ -150,69 +148,69 @@ body {
 .volume-wrapper {
     width: 100%;
     margin-top: 15px;
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(10px);
-    transition: all 0.3s;
     height: 0;
+    opacity: 0;
     overflow: hidden;
+    transition: all 0.3s ease;
+    visibility: hidden;
 }
 
 .sound-card.active .volume-wrapper {
+    height: auto;
     opacity: 1;
     visibility: visible;
-    transform: translateY(0);
-    height: auto;
-    overflow: visible;
+    margin-top: 10px;
 }
 
-.volume-controls {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    background: rgba(0,0,0,0.3);
-    padding: 8px;
-    border-radius: 8px;
-}
-
-.vol-btn {
-    background: none;
-    border: none;
-    color: #fff;
+input[type=range].volume-slider {
+    -webkit-appearance: none;
+    width: 100%;
+    background: transparent;
     cursor: pointer;
-    font-size: 1.2rem;
-    line-height: 1;
-    width: 24px;
-    height: 24px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    height: 20px;
+    display: block;
 }
 
-.vol-slider-track {
-    flex-grow: 1;
+input[type=range].volume-slider::-webkit-slider-runnable-track {
+    width: 100%;
     height: 4px;
-    background: var(--slider-bg);
+    background: rgba(255, 255, 255, 0.3);
     border-radius: 2px;
-    position: relative;
-    cursor: pointer;
+    transition: 0.2s;
 }
 
-.vol-slider-fill {
-    position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
+.sound-card:hover input[type=range].volume-slider::-webkit-slider-runnable-track {
+    background: rgba(255, 255, 255, 0.5);
+}
+
+input[type=range].volume-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    height: 16px;
+    width: 16px;
+    border-radius: 50%;
     background: #fff;
-    border-radius: 2px;
-    width: 50%;
+    cursor: pointer;
+    margin-top: -6px;
+    box-shadow: 0 0 5px rgba(0,0,0,0.3);
+    transition: transform 0.1s;
 }
 
-.vol-slider-track::after {
-    content: '';
-    position: absolute;
-    top: -10px;
-    bottom: -10px;
-    left: 0;
-    right: 0;
+input[type=range].volume-slider::-webkit-slider-thumb:hover {
+    transform: scale(1.2);
+}
+
+input[type=range].volume-slider::-moz-range-track {
+    width: 100%;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 2px;
+}
+
+input[type=range].volume-slider::-moz-range-thumb {
+    height: 16px;
+    width: 16px;
+    border: none;
+    border-radius: 50%;
+    background: #fff;
+    cursor: pointer;
 }
