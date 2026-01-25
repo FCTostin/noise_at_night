@@ -16,7 +16,7 @@
 
 body {
     background: url('https://i.imgur.com/yWazGMM.gif') center/cover fixed no-repeat;
-    background-color: var(--primary-bg); 
+    background-color: var(--primary-bg);
     color: var(--accent);
     font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     min-height: 100vh;
@@ -51,7 +51,7 @@ body {
     font-weight: 700;
     margin-bottom: 20px;
     text-shadow: 0 2px 10px rgba(0,0,0,0.5);
-    font-variant-numeric: tabular-nums; 
+    font-variant-numeric: tabular-nums;
 }
 
 .timer-controls {
@@ -144,9 +144,8 @@ body {
 
 .sound-name {
     font-weight: 500;
-    margin-bottom: auto; 
+    margin-bottom: auto;
 }
-
 
 .volume-wrapper {
     width: 100%;
@@ -155,7 +154,7 @@ body {
     visibility: hidden;
     transform: translateY(10px);
     transition: all 0.3s;
-    height: 0; 
+    height: 0;
     overflow: hidden;
 }
 
