@@ -1,25 +1,27 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="uk">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Звуки щоб заснути</title>
+    <meta name="description" content="Генератор фонових звуків для сну та релаксації. Звуки природи, таймер, налаштування гучності.">
+    <title>Звуки для сну</title>
     <link rel="icon" href="https://i.imgur.com/e1JIdxx.png" type="image/png">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <div class="overlay"></div>
     <div class="container">
-        <div class="timer-section">
-            <div class="timer-display" id="timerDisplay">00:00</div>
+        <header class="timer-section">
+            <div class="timer-display" id="timerDisplay" aria-label="Час до вимкнення">00:00</div>
             <div class="timer-controls">
-                <input type="number" id="minutesInput" placeholder="Минуты" min="0" value="50">
-                <button onclick="startTimer()">Старт</button>
-                <button onclick="stopTimer()">Стоп</button>
-                <button onclick="resetTimer()">Скидання</button>
+                <input type="number" id="minutesInput" placeholder="Хв" min="1" max="999" value="50" aria-label="Введіть хвилини">
+                <button onclick="startTimer()" class="btn-control">Старт</button>
+                <button onclick="stopTimer()" class="btn-control">Стоп</button>
+                <button onclick="resetTimer()" class="btn-control">Скидання</button>
             </div>
-        </div>
+        </header>
 
-        <div class="sounds-grid" id="soundsGrid"></div>
+        <main class="sounds-grid" id="soundsGrid"></main>
     </div>
 
     <script src="script.js"></script>
