@@ -15,6 +15,7 @@ const audioElements = {};
 let activeSoundsState = {};
 let timerInterval = null;
 let timerTargetTime = null;
+let pausedRemainingMs = null;
 
 function init() {
     const grid = document.getElementById('soundsGrid');
@@ -102,17 +103,18 @@ function updateVolumeUI(id) {
 }
 
 function startTimer() {
-    const input = document.getElementById('minutesInput');
-    const minutes = parseInt(input.value) || 0;
-    
-    if (minutes <= 0) return;
+    if (pausedRemainingMs && pausedRemainingMs > 0) {
+        timerTargetTime = Date.now() + pausedRemainingMs;
+        pausedRemainingMs = null;
+    } else {
+        const input = document.getElementById('minutesInput');
+        const minutes = parseInt(input.value) || 0;
+        if (minutes <= 0) return;
+        timerTargetTime = Date.now() + (minutes * 60 * 1000);
+    }
 
-    const now = Date.now();
-    timerTargetTime = now + (minutes * 60 * 1000);
-
-    stopTimer(false);
+    if (timerInterval) clearInterval(timerInterval);
     updateTimerDisplay();
-    
     timerInterval = setInterval(tickTimer, 1000);
     saveState();
 }
@@ -124,33 +126,40 @@ function tickTimer() {
     const remainingMs = timerTargetTime - now;
 
     if (remainingMs <= 0) {
-        stopTimer(true);
+        resetTimer();
         stopAllSounds();
     } else {
         updateTimerUI(Math.ceil(remainingMs / 1000));
     }
 }
 
-function stopTimer(clearTarget = true) {
-    if (timerInterval) {
+function pauseTimer() {
+    if (timerInterval && timerTargetTime) {
+        pausedRemainingMs = timerTargetTime - Date.now();
         clearInterval(timerInterval);
         timerInterval = null;
-    }
-    if (clearTarget) {
-        timerTargetTime = null;
-        updateTimerUI(0);
         saveState();
     }
 }
 
 function resetTimer() {
-    stopTimer(true);
+    if (timerInterval) {
+        clearInterval(timerInterval);
+        timerInterval = null;
+    }
+    timerTargetTime = null;
+    pausedRemainingMs = null;
+    updateTimerUI(0);
+    saveState();
 }
 
 function updateTimerDisplay() {
-    if (!timerTargetTime) return;
-    const remainingMs = timerTargetTime - Date.now();
-    updateTimerUI(Math.max(0, Math.ceil(remainingMs / 1000)));
+    if (pausedRemainingMs) {
+        updateTimerUI(Math.ceil(pausedRemainingMs / 1000));
+    } else if (timerTargetTime) {
+        const remainingMs = timerTargetTime - Date.now();
+        updateTimerUI(Math.max(0, Math.ceil(remainingMs / 1000)));
+    }
 }
 
 function updateTimerUI(secondsLeft) {
@@ -158,11 +167,13 @@ function updateTimerUI(secondsLeft) {
     const s = secondsLeft % 60;
     const display = document.getElementById('timerDisplay');
     
-    if (secondsLeft <= 0 && !timerTargetTime) {
+    if (secondsLeft <= 0 && !timerTargetTime && !pausedRemainingMs) {
         display.textContent = "00:00";
+        document.title = "Звуки сну";
     } else {
-        display.textContent = `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
-        document.title = `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')} - Звуки сну`;
+        const timeStr = `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+        display.textContent = timeStr;
+        document.title = `${timeStr} - Звуки сну`;
     }
 }
 
@@ -180,7 +191,6 @@ function stopAllSounds() {
         }
     });
     saveState();
-    document.title = "Звуки сну";
 }
 
 function handleKey(event, id) {
@@ -193,7 +203,8 @@ function handleKey(event, id) {
 function saveState() {
     const data = {
         sounds: activeSoundsState,
-        timerTarget: timerTargetTime
+        timerTarget: timerTargetTime,
+        pausedRemaining: pausedRemainingMs
     };
     localStorage.setItem('sleepSoundsData', JSON.stringify(data));
 }
@@ -215,14 +226,15 @@ function loadState() {
                 });
             }
 
-            if (data.timerTarget) {
+            if (data.pausedRemaining) {
+                pausedRemainingMs = data.pausedRemaining;
+                updateTimerUI(Math.ceil(pausedRemainingMs / 1000));
+            } else if (data.timerTarget) {
                 const now = Date.now();
                 if (data.timerTarget > now) {
                     timerTargetTime = data.timerTarget;
                     timerInterval = setInterval(tickTimer, 1000);
                     tickTimer();
-                } else {
-                    timerTargetTime = null;
                 }
             }
         } catch (e) {
