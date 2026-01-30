@@ -14,7 +14,10 @@
         <header class="timer-section">
             <div class="timer-display" id="timerDisplay" aria-label="Час до вимкнення">00:00</div>
             <div class="timer-controls">
-                <input type="number" id="minutesInput" placeholder="Хв" min="1" max="999" value="50" aria-label="Введіть хвилини">
+                <div class="input-wrapper">
+                    <input type="number" id="minutesInput" placeholder="Хв" min="1" max="999" value="50" aria-label="Введіть хвилини">
+                    <span class="input-suffix">хв</span>
+                </div>
                 <button onclick="startTimer()" class="btn-control">Старт</button>
                 <button onclick="stopTimer()" class="btn-control">Стоп</button>
                 <button onclick="resetTimer()" class="btn-control">Скидання</button>
